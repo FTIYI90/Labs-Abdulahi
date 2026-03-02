@@ -32,7 +32,23 @@ const sampleTransactions = [
     new Transaction("Electricity", 320, "expense", "Utilities"),
 ];
 
+// const sampleTransactions = JSON.parse(localStorage.getItem("transactions"))
 
+// localStorage.setItem("transactions", JSON.stringify(sampleTransactions)) || []
+// transaction-table
+const transactionTable = document.querySelector("#transaction-table")
+const mappedTransactions = sampleTransactions
+    .map(t => transactionToRow(t))
+transactionTable.innerHTML = mappedTransactions.join('');
+
+
+function transactionToRow(t) {
+    return `<tr> 
+                <td> ${t.description}</td> 
+                <td> ${t.category} </td> 
+                <td class =  ${t.isExpense() ? "text-danger" : "text-success"}> ${t.amount} </td>
+            </tr>`
+}
 // ======================================================
 // Module 4: DOM, Events, and LocalStorage
 // This module reinforces what you started in Lab 5 Modules 4-5,

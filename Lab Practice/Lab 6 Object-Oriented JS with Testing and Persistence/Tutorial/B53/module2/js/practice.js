@@ -109,15 +109,24 @@ console.log("After profit:", savings.getBalance());
 // Use super.format() to get the base string, then add to it.
 
 // TODO: Define RecurringTransaction class
+class RecurringTransaction extends Transaction {
+    constructor(description, amount, type, category, frequency) {
+        super(description, amount, type, category);
+        this.frequency = frequency;
+    }
+    format() {
+        return `${super.format()} (${this.frequency})`
+    }
 
+}
 
 
 // Test:
-// const salary = new RecurringTransaction("Salary", 8000, "income", "Salary", "monthly");
-// const netflix = new RecurringTransaction("Netflix", 45, "expense", "Entertainment", "monthly");
-// console.log(salary.format());     // +8,000 QAR (monthly)
-// console.log(netflix.format());    // -45 QAR (monthly)
-// console.log("Is expense?", netflix.isExpense()); // true (inherited)
+const salary = new RecurringTransaction("Salary", 8000, "income", "Salary", "monthly");
+const netflix = new RecurringTransaction("Netflix", 45, "expense", "Entertainment", "monthly");
+console.log(salary.format());     // +8,000 QAR (monthly)
+console.log(netflix.format());    // -45 QAR (monthly)
+console.log("Is expense?", netflix.isExpense()); // true (inherited)
 
 
 // ---- Exercise 3: instanceof and Type Checking ----
@@ -132,3 +141,11 @@ console.log("After profit:", savings.getBalance());
 // savings instanceof Account -> true
 // savings instanceof SavingsAccount -> true
 // new Transaction("x", 1, "income", "y") instanceof RecurringTransaction -> false
+
+console.log("salary instanceof Transaction:", salary instanceof Transaction); // true
+console.log("salary instanceof RecurringTransaction:", salary instanceof RecurringTransaction); // true
+console.log("savings instanceof Account:", savings instanceof Account); // true
+console.log("savings instanceof SavingsAccount:", savings instanceof SavingsAccount); // true
+
+const t = new Transaction("x", 1, "income", "y");
+console.log("t instanceof RecurringTransaction:", t instanceof RecurringTransaction); // false
