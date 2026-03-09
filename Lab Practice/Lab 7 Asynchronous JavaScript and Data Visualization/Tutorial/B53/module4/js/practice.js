@@ -61,8 +61,51 @@ loadTransactions();
 //   8. Wraps everything in try/catch
 
 // TODO: Add submit listener on #add-form
+const addForm = document.getElementById("add-form")
+addForm.addEventListener('submit', addTransaction)
 
+//POST [ADD] PUT[EDIT] DELETE , GET
+async function addTransaction(event) {
+    event.preventDefault(); //stop the form from reloading the page
 
+    // to extract the data from the form
+    const formData = new FormData(event.target);
+    const transaction = Object.fromEntries(formData.entries())
+
+    // send this object to the server
+    const config = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(transaction)
+    }
+    await fetch(API_URL, config)
+    // reload the page
+    loadTransactions()
+
+}
+
+const editForm = document.getElementById("edit-form")
+editForm.addEventListener('submit', updateTransaction)
+
+//POST [ADD] PUT[EDIT] DELETE , GET
+async function updateTransaction(event) {
+    event.preventDefault(); //stop the form from reloading the page
+
+    // to extract the data from the form
+    const formData = new FormData(event.target);
+    const transaction = Object.fromEntries(formData.entries())
+
+    // send this object to the server
+    const config = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(transaction)
+    }
+    await fetch(`${API_URL}/${transaction.id}`, config)
+    // reload the page
+    loadTransactions()
+
+}
 
 // ---- Exercise 2: PUT - Update a transaction ----
 // The Edit buttons in the table call startEdit(id). Write these functions:
@@ -98,10 +141,31 @@ loadTransactions();
 //   8. Wrap in try/catch
 
 // TODO: Write startEdit(id)
+async function startEdit(id) {
+    const response = await fetch(`${API_URL}/${id}`)
+    const transaction = await response.json()
 
+    document.getElementById("edit-id").value = transaction.id
+    document.getElementById("edit-desc").value = transaction.description
+    document.getElementById("edit-amount").value = transaction.amount
+    document.getElementById("edit-type").value = transaction.type
+    document.getElementById("edit-category").value = transaction.category
+
+    document.getElementById("edit-hint").style.display = "none"
+    document.getElementById("cancel-edit-btn").style.display = "inline-block"
+    document.getElementById("edit-status").textContent = `Editing transaction ${transaction.id}: ${transaction.description}`
+}
 
 // TODO: Write cancelEdit()
 
+function cancelEdit() {
+    document.getElementById("edit-form").reset()
+    document.getElementById("edit-id").value = ""
+
+    document.getElementById("edit-hint").style.display = "block"
+    document.getElementById("cancel-edit-btn").style.display = "none"
+    document.getElementById("edit-status").textContent = ""
+}
 
 // TODO: Add click listener on #cancel-edit-btn
 
