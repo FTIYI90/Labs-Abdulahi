@@ -6,7 +6,7 @@ College of Engineering - Department of Computer Science and Engineering<br>
 
 ---
 
-# Lab 7: Asynchronous JavaScript and CRUD Operations
+# Lab 7: Asynchronous JavaScript and Client JS
 
 **Duration:** 120 minutes
 **Theme:** Personal Finance Platform - Part 7 of 11
