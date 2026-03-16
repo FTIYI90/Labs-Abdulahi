@@ -1,29 +1,41 @@
 import { NextResponse } from 'next/server'
 import React from 'react'
+import path from 'path'
+import { promises as fs } from 'fs'
 
-const accounts = [
-    {
-        "id": 3,
-        "name": "Emergency Fund",
-        "type": "savings",
-        "balance": 10000.00,
-        "status": "active"
-    },
-    {
-        "id": 4,
-        "name": "Old Account",
-        "type": "checking",
-        "balance": 0,
-        "status": "closed"
-    }
-]
+const accountsPath = path.join(process.cwd(), "data", "accounts.json")
 
-export async function GET(request, { params }) {
-    return NextResponse.json(accounts)
+async function getAccounts() {
+    const data = await fs.readFile(accountsPath)
+    return JSON.parse(data)
 }
 
+async function writeAccounts(accounts) {
+    await fs.writeFile(accountsPath, JSON.stringify(accounts, null, 4))
+}
+
+export async function GET(request, { params }) {
+    const accounts = await getAccounts()
+    return NextResponse.json({
+        accounts
+    })
+}
+
+// adding a new resource [account]
 export async function POST(request, { params }) {
-    const account = await request.json()
-    accounts.push(account)
-    return NextResponse.json({ message: "successfully added the account" })
+    try {
+        const account = await request.json()
+
+        // make a validations
+        if (account.type.length < 3)
+            return NextResponse.json({ message: "account type can not be null", e })
+
+        const accounts = await getAccounts()
+        accounts.push(account)
+        writeAccounts(accounts)
+
+        return NextResponse.json({ message: "successfully added the account" })
+    } catch (e) {
+        return NextResponse.json({ message: "unable to add account", e })
+    }
 }
