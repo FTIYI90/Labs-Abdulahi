@@ -64,4 +64,33 @@ export async function DELETE(request, { params }) {
     }
 }
 
+// update data
+export async function PUT(request, { params }) {
+    try {
+        const { id } = await params
+        const updatedAccount = await request.json()
+
+        //read the json you have
+        const accounts = await readAccounts()
+
+        const index = accounts.findIndex(a => a.id == id)
+
+        if (index < 0) {
+            return NextResponse.json({ message: `Unable to find account with id ${id}` })
+        }
+
+        //update the object content
+        accounts[index] = { ...accounts[index], ...updatedAccount }
+
+        // write back to the file the accounts without the deleted account
+        await writeAccounts(accounts)
+
+        return NextResponse.json({ message: `Successfully updated the account with id ${id}` })
+
+
+    } catch (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+}
+
 //update account

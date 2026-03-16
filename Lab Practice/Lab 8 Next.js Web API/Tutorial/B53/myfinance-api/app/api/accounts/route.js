@@ -20,8 +20,25 @@ async function writeAccounts(accounts) {
 export async function GET(request, { params }) {
     try {
         //return all the accounts
+        //  http://localhost:3001/api/accounts? 
+        // type=cheking&status=closed
+        const { searchParams } = new URL(request.url)
+
+        const type = searchParams.get("type")
+        const status = searchParams.get("status")
+
         const accounts = await readAccounts()
-        return NextResponse.json(accounts)
+
+
+        if (!type || !status) {
+            return NextResponse.json(accounts)
+        }
+
+        const filteredAccounts = accounts.filter(
+            a => a.type == type && a.status == status)
+
+        return NextResponse.json(filteredAccounts)
+
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
