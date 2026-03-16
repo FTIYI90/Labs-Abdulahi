@@ -20,10 +20,14 @@ export async function GET(request, { params }) {
     const accounts = await readAccounts()
     return NextResponse.json(accounts)
 }
+
 // adding a new data
 export async function POST(request, { params }) {
     // get the data the user sent us
     const account = await request.json()
+
+    // we did not check if this account isa a valid account
+    
 
     // read the data we have in our json file
     const accounts = await readAccounts()
@@ -32,7 +36,7 @@ export async function POST(request, { params }) {
     accounts.push(account)
 
     // rewrite into our file
-    writeAccounts(accounts)
+    await writeAccounts(accounts)
 
     // respond to the user that you added the account successfully
     return NextResponse.json({ message: "successfully added the account" })
