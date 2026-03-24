@@ -22,3 +22,15 @@ export async function GET() {
     const accounts = await readAccounts()
     return NextResponse.json(accounts, { status: 200 })
 }
+
+export async function POST(request) {
+    // read what they gave
+    const account = await request.json()
+    const accounts = await readAccounts()
+
+    accounts.push(account)
+
+    await writeAccounts(accounts);
+
+    return NextResponse.json("Successfully added the new account", { status: 201 })
+}

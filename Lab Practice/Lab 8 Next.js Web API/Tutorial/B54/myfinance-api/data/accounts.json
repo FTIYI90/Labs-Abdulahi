@@ -3,21 +3,21 @@
         "id": 1,
         "name": "Main Checking",
         "type": "checking",
-        "balance": 15420.50,
+        "balance": 15420.5,
         "status": "active"
     },
     {
         "id": 2,
         "name": "Savings Account",
         "type": "savings",
-        "balance": 28750.00,
+        "balance": 28750,
         "status": "active"
     },
     {
         "id": 3,
         "name": "Emergency Fund",
         "type": "savings",
-        "balance": 10000.00,
+        "balance": 10000,
         "status": "active"
     },
     {
@@ -26,5 +26,12 @@
         "type": "checking",
         "balance": 0,
         "status": "closed"
+    },
+    {
+        "id": 66,
+        "name": "Main Checking",
+        "type": "checking",
+        "balance": 18885420.5,
+        "status": "active"
     }
 ]
