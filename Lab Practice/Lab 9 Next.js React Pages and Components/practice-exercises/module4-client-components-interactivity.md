@@ -24,9 +24,12 @@ export default function MyPage() {
     const [filter, setFilter] = useState("all");
 
     useEffect(() => {
-        fetch("/api/items")
-            .then(res => res.json())
-            .then(data => setItems(data));
+        async function loadItems() {
+            const res = await fetch("/api/items");
+            const data = await res.json();
+            setItems(data);
+        }
+        loadItems();
     }, []);
 
     const filtered = filter === "all"

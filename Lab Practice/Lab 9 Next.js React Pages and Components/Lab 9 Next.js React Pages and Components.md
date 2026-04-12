@@ -439,9 +439,12 @@ export default function TransactionsPage() {
     const [filterType, setFilterType] = useState("all");
 
     useEffect(() => {
-        fetch("/api/transactions")
-            .then((res) => res.json())
-            .then((data) => setTransactions(data));
+        async function loadTransactions() {
+            const res = await fetch("/api/transactions");
+            const data = await res.json();
+            setTransactions(data);
+        }
+        loadTransactions();
     }, []);
 
     const filtered = filterType === "all"
@@ -500,7 +503,7 @@ Walk through it:
 
 1. `"use client"` marks this as a Client Component
 2. `useState([])` creates state that starts empty
-3. `useEffect(..., [])` runs once after the first render. Inside, we fetch and update state.
+3. `useEffect(..., [])` runs once after the first render. We define an inner `async` function for the fetch (using the async/await you learned in Lab 7), then call it. We can't make `useEffect`'s callback itself `async` because React expects that callback to return either nothing or a cleanup function, not a Promise.
 4. Every state update re-renders the component
 5. Changing the filter dropdown updates `filterType`, which re-filters the array, which re-renders the table
 
