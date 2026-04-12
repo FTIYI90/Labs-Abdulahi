@@ -1,60 +1,37 @@
-<h2>Budgets</h2>
-<div class="card form-card">
-    <h3 id="budgets-form-title">Add Budget</h3>
-    <form id="budget-form">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="budget-category">Category</label>
-                <select id="budget-category" name="category" required>
-                    <option value="">-- Select Category --</option>
-                    <option value="Housing">Housing</option>
-                    <option value="Food">Food</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Utilities">Utilities</option>
-                    <option value="Entertainment">Entertainment</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="budget-budgeted">Budgeted (QAR)</label>
-                <input type="number" id="budget-budgeted" name="budgeted" step="0.01" required>
-            </div>
-            <div class="form-group">
-                <label for="budget-spent">Spent (QAR)</label>
-                <input type="number" id="budget-spent" name="spent" step="0.01" required>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Budgets - MyFinance</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <span class="brand">MyFinance</span>
+        <ul class="nav-links">
+            <li><a href="../index.html">Dashboard</a></li>
+            <li><a href="transactions.html">Transactions</a></li>
+            <li><a href="budgets.html">Budgets</a></li>
+        </ul>
+    </nav>
+
+    <main class="page">
+        <h1>Budgets</h1>
+
+        <div class="filter-bar">
+            <label for="search">Search by category:</label>
+            <input id="search" type="text" placeholder="e.g. Food, Housing...">
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="budget-month">Month</label>
-                <input type="text" id="budget-month" name="month" placeholder="e.g. March" required>
-            </div>
-            <div class="form-group">
-                <label for="budget-year">Year</label>
-                <input type="number" id="budget-year" name="year" required>
-            </div>
+
+        <div id="budgets-grid" class="dashboard-grid">
+            <div class="empty-state">Loading...</div>
         </div>
-        <div class="btn-group">
-            <button type="submit" class="btn btn-primary" id="budgets-submit-btn">Add Budget</button>
-            <button type="button" class="btn btn-secondary hidden" id="budgets-cancel-btn"
-                onclick="cancelEditBudget()">Cancel</button>
-        </div>
-    </form>
-</div>
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Budgeted (QAR)</th>
-                <th>Spent (QAR)</th>
-                <th>Month/Year</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="budgets-table-body">
-            <tr>
-                <td colspan="5" class="empty-message">Loading...</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script>loadBudgets();</script>
+</body>
+
+</html>
