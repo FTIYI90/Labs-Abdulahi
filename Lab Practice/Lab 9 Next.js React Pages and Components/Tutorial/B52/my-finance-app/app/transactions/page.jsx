@@ -5,10 +5,11 @@ import TransactionRow from '@/app/components/TransactionRow'
 function Transactions() {
 
     const [transactions, setTransactions] = useState([])
+    const [type, setType] = useState('all')
 
     // http://localhost:3000/api/transactions?type=income
     async function getTransactions(type) {
-        const url = type ? `/api/transactions?type=${type}` : '/api/transactions'
+        const url = type == 'all' ? '/api/transactions' : `/api/transactions?type=${type}`
         const res = await fetch(url)
         const data = await res.json()
         setTransactions(data)
@@ -16,10 +17,8 @@ function Transactions() {
 
     // is a react hook that runs after the component is rendered
     useEffect(() => {
-
-        getTransactions()
-    }, [])
-
+        getTransactions(type)
+    }, [type])
 
     return (
         <div>
@@ -28,7 +27,7 @@ function Transactions() {
 
                 <div className="filter-bar">
                     <label htmlFor="type-filter">Filter by type:</label>
-                    <select id="type-filter">
+                    <select id="type-filter" onChange={e => setType(e.target.value)} value={type}>
                         <option value="all">All</option>
                         <option value="income" >Income</option>
                         <option value="expense">Expense</option>
