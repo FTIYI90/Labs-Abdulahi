@@ -6,11 +6,6 @@ export default function Home() {
     <>
       <h1 className="red">My First Next JS React = {2 + 5} </h1>
       <h1>My First Next JS React = {2 + 5} </h1>
-      <label htmlFor=""></label>
-
-      {[1, 2, 3].map(n => <li>{n}</li>)}
-
-
     </>
   );
 }

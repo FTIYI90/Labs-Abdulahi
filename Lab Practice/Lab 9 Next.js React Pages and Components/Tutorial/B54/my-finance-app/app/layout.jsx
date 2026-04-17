@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+
+import NavBar from "@/components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,20 +22,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <nav class="navbar">
-          <span class="brand">MyFinance</span>
-
-          <ul class="nav-links">
-            Link
-            <li><Link href="/">Dashboard</Link></li>
-            <li><Link href="/transactions">Transactions</Link></li>
-            <li><Link href="/budgets">Budgets</Link></li>
-          </ul>
-        </nav>
-
+        <NavBar title={"MyFinance"} date={"1/1/1"}></NavBar>
         {children}
+        <NavBar ></NavBar>
+
       </body>
 
-    </html>
+    </html >
   );
 }
+
+
