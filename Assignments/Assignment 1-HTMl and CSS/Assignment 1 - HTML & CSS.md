@@ -9,7 +9,7 @@ College of Engineering - Department of Computer Science and Engineering<br>
 # Assignment 1: Building with HTML & CSS
 
 **Graded out of:** 100%
-**Deadline:** Saturday, February 28, 2026 - 11:59 PM
+**Deadline:** Saturday, February 20, 2026 - 11:59 PM
 
 ---
 
