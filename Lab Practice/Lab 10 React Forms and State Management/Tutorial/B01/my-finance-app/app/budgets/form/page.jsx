@@ -10,17 +10,23 @@ const months = [
 ];
 
 export default function BudgetFormPage() {
-    const budget = null;  // TODO 10a: Replace with Object.fromEntries(useSearchParams().entries())
-    const isEdit = false; // TODO 10b: Replace with !!budget.id
-    const action = null;  // TODO 10c: Replace with isEdit ? updateBudgetAction : createBudgetAction
+    const searchParams = useSearchParams()
+    const budget = Object.fromEntries(searchParams)
+
+    // const budget = null;  // TODO 10a: Replace with Object.fromEntries(useSearchParams().entries())
+    const isEdit = !!budget.id
+    const action = isEdit ? updateBudgetAction : createBudgetAction;  // TODO 10c: Replace with isEdit ? updateBudgetAction : createBudgetAction
 
     return (
         <main className="page">
+            {/* {JSON.stringify(data)} */}
+
+
             {/* TODO 10e: Change to {isEdit ? "Edit" : "Add"} Budget */}
-            <h1>Add Budget</h1>
+            <h1>{isEdit ? 'Edit Budget' : 'Add Budget'}</h1>
             <div className="form-container">
                 {/* TODO 10d: Pass the server action to the form: action={action} */}
-                <form>
+                <form action={action}>
                     {isEdit && <input type="hidden" name="id" value={budget.id} />}
                     <div className="form-group">
                         <label htmlFor="category">Category</label>

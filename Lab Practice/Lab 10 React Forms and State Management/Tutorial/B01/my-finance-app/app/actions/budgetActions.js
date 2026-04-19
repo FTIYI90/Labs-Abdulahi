@@ -45,8 +45,12 @@ export async function deleteBudgetAction(id) {
     // TODO 7a: Call budgetsRepo.delete(id)
     // TODO 7b: revalidatePath("/budgets") and revalidatePath("/")
 
-    await budgetsRepo.delete(id);
-    // reload the budgets page and the home page to reflect the deleted budget
-    revalidatePath("/budgets");
-    revalidatePath("/");
+    try {
+        await budgetsRepo.delete(id);
+        // reload the budgets page and the home page to reflect the deleted budget
+        revalidatePath("/budgets");
+        revalidatePath("/");
+    } catch (e) {
+        return e;
+    }
 }

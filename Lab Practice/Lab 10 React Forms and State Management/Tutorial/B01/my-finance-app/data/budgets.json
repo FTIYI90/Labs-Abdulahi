@@ -3,9 +3,9 @@
         "id": 1,
         "category": "Housing",
         "budgeted": 5000,
-        "spent": 4500,
+        "spent": 4500555,
         "month": "March",
-        "year": 2026
+        "year": 2025
     },
     {
         "id": 2,
@@ -28,6 +28,14 @@
         "category": "Utilities",
         "budgeted": 1000,
         "spent": 765,
+        "month": "March",
+        "year": 2026
+    },
+    {
+        "id": 5,
+        "category": "Food",
+        "budgeted": 111,
+        "spent": 10,
         "month": "March",
         "year": 2026
     }
