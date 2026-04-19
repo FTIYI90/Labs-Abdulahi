@@ -3,10 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 // TODO 4a: Import deleteTransactionAction from "@/app/actions/transactionActions"
+import { deleteTransactionAction } from "@/app/actions/transactionActions";
 
 export default function TransactionsPage() {
     const [transactions, setTransactions] = useState([]);
     const [filterType, setFilterType] = useState("all");
+
+    async function handleDelete(id) {
+        await deleteTransactionAction(id)
+        await loadTransactions()
+    }
 
     async function loadTransactions() {
         const url = filterType === "all"
