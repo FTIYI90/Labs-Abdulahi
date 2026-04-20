@@ -21,7 +21,11 @@
         "budgeted": 1000,
         "spent": 765,
         "month": "March",
-        "year": 2026
+        "year": 2026,
+        "$ACTION_REF_1": "",
+        "$ACTION_1:0": "{\"id\":\"6064889529510fb1b7200da69cb11b99cf237de0dc\",\"bound\":\"$@1\"}",
+        "$ACTION_1:1": "[{}]",
+        "$ACTION_KEY": "k84a5789f03f2d8aabd517020517d003d"
     },
     {
         "id": 5,

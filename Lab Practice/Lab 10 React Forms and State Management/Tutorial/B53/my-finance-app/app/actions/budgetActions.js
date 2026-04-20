@@ -11,24 +11,6 @@ export async function createBudgetAction(prevState, formData) {
     //   Return errors if any fail
     // TODO 5d: await budgetsRepo.create(data)
     // TODO 5e: revalidatePath("/") then redirect("/budgets")
-    const budget = Object.fromEntries(formData)
-    budget.budgeted = Number(budget.budgeted);
-    budget.spent = Number(budget.spent);
-    budget.year = Number(budget.year);
-
-    // handle errors
-    const error = {};
-    if (!budget.category) error.category = "Category is required";
-    if (!budget.budgeted || budget.budgeted <= 0) error.budgeted = "Budgeted amount must be greater than 0";
-    if (!budget.month) error.month = "Month is required";
-    if (budget.year < 2020) error.year = "Year must be 2020 or later";
-
-    if (Object.keys(error).length > 0) { return error; }
-
-    await budgetsRepo.create(budget)
-
-    revalidatePath("/") //only works for server side components
-    redirect("/budgets")
 }
 
 export async function updateBudgetAction(prevState, formData) {
