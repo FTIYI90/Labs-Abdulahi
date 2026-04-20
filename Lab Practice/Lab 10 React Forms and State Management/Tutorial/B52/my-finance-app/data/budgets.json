@@ -17,9 +17,17 @@
     },
     {
         "id": 4,
-        "category": "Utilities",
+        "category": "Food",
         "budgeted": 1000,
         "spent": 765,
+        "month": "March",
+        "year": 2026
+    },
+    {
+        "id": 5,
+        "category": "Food",
+        "budgeted": 444,
+        "spent": 300,
         "month": "March",
         "year": 2026
     }

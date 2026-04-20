@@ -26,7 +26,7 @@ export default function BudgetFormPage() {
             <div className="form-container">
                 {/* TODO 10d: Pass the server action to the form: action={action} */}
                 <form action={formAction}>
-                    {isEdit && <input name="id" hidden value={budget.id} />}
+                    {isEdit && <input name="id" defaultValue={budget.id} readOnly type="hidden" />}
                     <div className="form-group">
                         <label htmlFor="category">Category</label>
                         <select id="category" name="category" defaultValue={budget?.category || "Food"}>

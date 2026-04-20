@@ -18,7 +18,7 @@ export async function createBudgetAction(prevState, formData) {
     data.year = Number(data.year);
 
     const error = {};
-    if (!data.description?.trim()) error.description = "Description is required";
+    if (!data.category) error.category = "Category is required";
     if (!data.budgeted || data.budgeted <= 0) error.budgeted = "Budgeted amount must be greater than 0";
     if (!data.month) error.month = "Month is required";
     if (data.year < 2020) error.year = "Year must be 2020 or later";
@@ -44,7 +44,7 @@ export async function updateBudgetAction(prevState, formData) {
     fields.year = Number(fields.year);
 
     const error = {};
-    if (!fields.description?.trim()) error.description = "Description is required";
+    // if (!fields.description?.trim()) error.description = "Description is required";
     if (!fields.budgeted || fields.budgeted <= 0) error.budgeted = "Budgeted amount must be greater than 0";
     if (!fields.month) error.month = "Month is required";
     if (fields.year < 2020) error.year = "Year must be 2020 or later";
