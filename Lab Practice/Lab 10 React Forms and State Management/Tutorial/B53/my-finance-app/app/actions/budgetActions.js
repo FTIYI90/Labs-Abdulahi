@@ -11,6 +11,23 @@ export async function createBudgetAction(prevState, formData) {
     //   Return errors if any fail
     // TODO 5d: await budgetsRepo.create(data)
     // TODO 5e: revalidatePath("/") then redirect("/budgets")
+    const data = Object.fromEntries(formData)
+    data.budgeted = Number(data.budgeted);
+    data.spent = Number(data.spent);
+    data.year = Number(data.year);
+
+    const error = {};
+    if (!data.category) error.category = "Category is required";
+    if (!data.budgeted || data.budgeted <= 0) error.budgeted = "Budgeted amount must be greater than 0";
+    if (!data.month) error.month = "Month is required";
+    if (data.year < 2020) error.year = "Year must be 2020 or later";
+
+    if (Object.keys(error).length > 0) { return error; }
+
+    await budgetsRepo.create(data)
+    // [server side component will fetch the new list of items]
+    revalidatePath("/")
+    // [navigate to the budget list page]
 }
 
 export async function updateBudgetAction(prevState, formData) {
@@ -19,9 +36,29 @@ export async function updateBudgetAction(prevState, formData) {
     // TODO 6c: Validate (same rules as create). Return errors if any fail.
     // TODO 6d: await budgetsRepo.update(id, fields)
     // TODO 6e: revalidatePath("/") then redirect("/budgets")
+
+    const { id, ...fields } = Object.fromEntries(formData)
+    fields.budgeted = Number(fields.budgeted);
+    fields.spent = Number(fields.spent);
+    fields.year = Number(fields.year);
+
+    const error = {};
+    if (!fields.category) error.category = "Category is required";
+    if (!fields.budgeted || fields.budgeted <= 0) error.budgeted = "Budgeted amount must be greater than 0";
+    if (!fields.month) error.month = "Month is required";
+    if (fields.year < 2020) error.year = "Year must be 2020 or later";
+
+    if (Object.keys(error).length > 0) { return error; }
+
+    await budgetsRepo.update(id, fields)
+    // [server side component will fetch the new list of items]
+    revalidatePath("/")
+    // [navigate to the budget list page]
 }
 
 export async function deleteBudgetAction(id) {
     // TODO 7a: await budgetsRepo.delete(id)
     // TODO 7b: revalidatePath("/")
+    await budgetsRepo.delete(id)
+    revalidatePath("/")
 }
