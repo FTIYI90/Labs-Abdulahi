@@ -28,6 +28,7 @@ export async function createBudgetAction(prevState, formData) {
     // [server side component will fetch the new list of items]
     revalidatePath("/")
     // [navigate to the budget list page]
+    redirect("/budgets")
 }
 
 export async function updateBudgetAction(prevState, formData) {
@@ -54,6 +55,7 @@ export async function updateBudgetAction(prevState, formData) {
     // [server side component will fetch the new list of items]
     revalidatePath("/")
     // [navigate to the budget list page]
+    redirect("/budgets")
 }
 
 export async function deleteBudgetAction(id) {
