@@ -37,9 +37,29 @@ export async function updateBudgetAction(prevState, formData) {
     // TODO 6c: Validate (same rules as create). Return errors if any fail.
     // TODO 6d: await budgetsRepo.update(id, fields)
     // TODO 6e: revalidatePath("/") then redirect("/budgets")
+    const { id, ...fields } = Object.fromEntries(formData)
+    fields.budgeted = Number(fields.budgeted);
+    fields.spent = Number(fields.spent);
+    fields.year = Number(fields.year);
+
+    // handle errors
+    const error = {};
+    if (!fields.category) error.category = "Category is required";
+    if (!fields.budgeted || fields.budgeted <= 0) error.budgeted = "Budgeted amount must be greater than 0";
+    if (!fields.month) error.month = "Month is required";
+    if (fields.year < 2020) error.year = "Year must be 2020 or later";
+
+    if (Object.keys(error).length > 0) { return error; }
+
+    await budgetsRepo.update(id, fields)
+
+    revalidatePath("/") //only works for server side components
+    redirect("/budgets")
 }
 
 export async function deleteBudgetAction(id) {
     // TODO 7a: await budgetsRepo.delete(id)
     // TODO 7b: revalidatePath("/")
+    await budgetsRepo.delete(id)
+    revalidatePath("/")
 }
