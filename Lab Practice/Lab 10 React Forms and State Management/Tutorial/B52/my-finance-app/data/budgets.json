@@ -1,0 +1,38 @@
+[
+    {
+        "id": 2,
+        "category": "Food",
+        "budgeted": 2000,
+        "spent": 1250,
+        "month": "March",
+        "year": 2026
+    },
+    {
+        "id": 3,
+        "category": "Transport",
+        "budgeted": 500,
+        "spent": 150,
+        "month": "March",
+        "year": 2026
+    },
+    {
+        "id": 4,
+        "category": "Food",
+        "budgeted": 1000,
+        "spent": 765,
+        "month": "March",
+        "year": 2026,
+        "$ACTION_REF_1": "",
+        "$ACTION_1:0": "{\"id\":\"6064889529510fb1b7200da69cb11b99cf237de0dc\",\"bound\":\"$@1\"}",
+        "$ACTION_1:1": "[{}]",
+        "$ACTION_KEY": "k84a5789f03f2d8aabd517020517d003d"
+    },
+    {
+        "id": 5,
+        "category": "Food",
+        "budgeted": 444,
+        "spent": 300,
+        "month": "March",
+        "year": 2026
+    }
+]
