@@ -21,15 +21,15 @@ In Assignment 4 you **rebuild that vanilla client as a Next.js app**: same featu
 
 The Assignment 3 backend is provided as a complete working solution. **Do not modify** the API routes, the repo, the data, the vanilla client, or `globals.css`. You build the Next.js frontend on top.
 
-> **Spec:** open `http://localhost:3000/client/` (the vanilla version) side-by-side with your app at `http://localhost:3000/`. They should behave the same.
+> **Spec:** open `http://localhost:3000/client/index.html` (the vanilla version) side-by-side with your app at `http://localhost:3000/`. They should behave the same.
 
 ---
 
 ## How to Get Started
 
-1. Get the starter from the shared lab repo ([`Labs-Abdulahi`](https://github.com/cmps350s26/Labs-Abdulahi)) under `Assignments/Assignment 4`. Copy it into your own repo at the same path.
+1. Get the starter from the shared lab repo ([`Labs-Abdulahi`](https://github.com/cmps350s26/Labs-Abdulahi)) under `Assignments/Assignment 4 - Next.js Frontend with Server Actions`. Copy it into your own repo at the same path.
 2. In `recipevault-app`, run `npm install`, then `npm run dev`.
-3. Visit `http://localhost:3000/client/` to confirm the Assignment 3 client still works.
+3. Visit `http://localhost:3000/client/index.html` to confirm the Assignment 3 client still works.
 4. Visit `http://localhost:3000/` to see the placeholder Dashboard you'll replace.
 
 ---
@@ -43,7 +43,6 @@ The Assignment 3 backend is provided as a complete working solution. **Do not mo
 | Seed data (10 recipes) | `data/recipes.json` |
 | Vanilla JS client (your spec) | `public/client/` |
 | Global CSS — all class names you need | `app/globals.css` |
-| Empty Dashboard stub & layout | `app/page.js`, `app/layout.js` |
 
 | You build | Where |
 |---|---|
@@ -51,8 +50,8 @@ The Assignment 3 backend is provided as a complete working solution. **Do not mo
 | React components | **You create** `app/components/` (3 files) |
 | Recipes list page | **You create** `app/recipes/page.jsx` |
 | Recipe form page | **You create** `app/recipes/form/page.jsx` |
-| Dashboard body | Fill in the existing `app/page.js` |
-| Layout wiring | Edit the existing `app/layout.js` |
+| Dashboard body | Fill in the provided stub at `app/page.js` |
+| Layout wiring | Fill in the provided stub at `app/layout.js` |
 
 > **You create the folders yourself** — Next.js uses **file-based routing**, so where you put a `page.jsx` *is* its URL. Picking the right folder path is part of the grade.
 
@@ -122,7 +121,7 @@ Render `<NavBar />` above `{children}` so the nav appears on every page. Keep `g
 When you're done, your project should look like this:
 
 ```
-Assignment 4/
+Assignment 4 - Next.js Frontend with Server Actions/
 └── recipevault-app/
     ├── app/
     │   ├── globals.css                    (provided)
@@ -148,4 +147,7 @@ Assignment 4/
 
 ## Deliverables
 
-Push to your own repo under `Assignments/Assignment 4` before **Saturday, May 3, 2026 at 11:59 PM**. **No late submissions.** Build everything yourself — no AI tools or code generators.
+1. Push your completed `recipevault-app/` to your own repo under `Assignments/Assignment 4 - Next.js Frontend with Server Actions` before **Saturday, May 3, 2026 at 11:59 PM**. **No late submissions.**
+2. Complete and submit the **Testing & Grading Sheet** (`Testing-Grading-Sheet.md`) with all required screenshots in a `screenshots/` folder. ⚠️ Submitting it does **not** add points, but **not submitting it deducts 10 points** from your grade.
+
+Build everything yourself — no AI tools or code generators.

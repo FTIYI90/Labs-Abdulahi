@@ -84,12 +84,26 @@ async function loadPage(page) {
         link.classList.toggle("active", link.textContent.toLowerCase() === (page === "add-recipe" ? "add recipe" : page));
     });
 
-    if (page === "recipes") {
+    if (page === "dashboard") {
+        await loadDashboard();
+    } else if (page === "recipes") {
         wireRecipeFilters();
         await loadRecipes();
     } else if (page === "add-recipe") {
         document.querySelector("#recipe-form")
             .addEventListener("submit", handleRecipeSubmit);
+    }
+}
+
+async function loadDashboard() {
+    try {
+        const response = await fetch(`${API_URL}/stats`);
+        const stats = await response.json();
+        document.querySelector("#stat-total").textContent = stats.total ?? 0;
+        document.querySelector("#stat-prep").textContent = `${stats.avgPrepTime ?? 0} min`;
+        document.querySelector("#stat-cook").textContent = `${stats.avgCookTime ?? 0} min`;
+    } catch (error) {
+        console.error("Failed to load stats:", error);
     }
 }
 
@@ -215,14 +229,30 @@ function cancelEdit() {
 // Section 7: Delete Recipe
 // ============================================
 
-async function handleDelete(id) {
-    if (!confirm("Are you sure you want to delete this recipe?")) return;
-    try {
-        await deleteRecipeById(id);
-        await loadRecipes();
-    } catch (error) {
-        console.error("Failed to delete recipe:", error);
-    }
+function handleDelete(id) {
+    const overlay = document.createElement("div");
+    overlay.className = "confirm-overlay";
+    overlay.innerHTML = `
+        <div class="confirm-dialog">
+            <h3>Delete Recipe</h3>
+            <p>Are you sure? This action cannot be undone.</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+                <button type="button" class="btn btn-primary" id="confirm-cancel-btn">Cancel</button>
+            </div>
+        </div>`;
+    document.body.appendChild(overlay);
+
+    overlay.querySelector("#confirm-cancel-btn").addEventListener("click", () => overlay.remove());
+    overlay.querySelector("#confirm-delete-btn").addEventListener("click", async () => {
+        overlay.remove();
+        try {
+            await deleteRecipeById(id);
+            await loadRecipes();
+        } catch (error) {
+            console.error("Failed to delete recipe:", error);
+        }
+    });
 }
 
 // ============================================
@@ -230,5 +260,5 @@ async function handleDelete(id) {
 // ============================================
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await loadPage("recipes");
+    await loadPage("dashboard");
 });

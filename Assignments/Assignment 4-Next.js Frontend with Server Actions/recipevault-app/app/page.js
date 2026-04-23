@@ -13,7 +13,7 @@ export default function Home() {
         <main className="page">
             <h1>RecipeVault</h1>
             <p>TODO: Build the dashboard here</p>
-            <p><a href="/client/">Vanilla Client (Assignment 3 reference)</a></p>
+            <p><a href="/client/index.html">Vanilla Client (Assignment 3 reference)</a></p>
         </main>
     );
 }
