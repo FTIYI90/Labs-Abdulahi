@@ -36,22 +36,22 @@ The Assignment 3 backend is provided as a complete working solution. **Do not mo
 
 ## What's Provided vs. What You Build
 
-| Provided (do **not** modify) | Where |
-|---|---|
-| API routes (GET / POST / PUT / DELETE / stats) | `app/api/recipes/` |
-| `RecipesRepo` class | `repos/RecipesRepo.js` |
-| Seed data (10 recipes) | `data/recipes.json` |
-| Vanilla JS client (your spec) | `public/client/` |
-| Global CSS — all class names you need | `app/globals.css` |
+| Provided (do**not** modify)              | Where                    |
+| ---------------------------------------------- | ------------------------ |
+| API routes (GET / POST / PUT / DELETE / stats) | `app/api/recipes/`     |
+| `RecipesRepo` class                          | `repos/RecipesRepo.js` |
+| Seed data (10 recipes)                         | `data/recipes.json`    |
+| Vanilla JS client (your spec)                  | `public/client/`       |
+| Global CSS — all class names you need         | `app/globals.css`      |
 
-| You build | Where |
-|---|---|
-| Server Actions | **You create** `app/actions/recipeActions.js` |
-| React components | **You create** `app/components/` (3 files) |
-| Recipes list page | **You create** `app/recipes/page.jsx` |
-| Recipe form page | **You create** `app/recipes/form/page.jsx` |
-| Dashboard body | Fill in the provided stub at `app/page.js` |
-| Layout wiring | Fill in the provided stub at `app/layout.js` |
+| You build         | Where                                                 |
+| ----------------- | ----------------------------------------------------- |
+| Server Actions    | **You create** `app/actions/recipeActions.js` |
+| React components  | **You create** `app/components/` (3 files)    |
+| Recipes list page | **You create** `app/recipes/page.jsx`         |
+| Recipe form page  | **You create** `app/recipes/form/page.jsx`    |
+| Dashboard body    | Fill in the provided stub at `app/page.js`          |
+| Layout wiring     | Fill in the provided stub at `app/layout.js`        |
 
 > **You create the folders yourself** — Next.js uses **file-based routing**, so where you put a `page.jsx` *is* its URL. Picking the right folder path is part of the grade.
 
@@ -59,50 +59,55 @@ The Assignment 3 backend is provided as a complete working solution. **Do not mo
 
 ## Routes You Must Implement
 
-| URL | File you create | Type |
-|---|---|---|
-| `/` | `app/page.js` *(already stubbed)* | Server Component (Dashboard) |
-| `/recipes` | `app/recipes/page.jsx` | Client Component (list + filters + delete) |
-| `/recipes/form` | `app/recipes/form/page.jsx` | Add mode |
-| `/recipes/form?id=…&name=…` | *(same file)* | Edit mode (detect via query params) |
+| URL                             | File you create                       | Type                                       |
+| ------------------------------- | ------------------------------------- | ------------------------------------------ |
+| `/`                           | `app/page.js` *(already stubbed)* | Server Component (Dashboard)               |
+| `/recipes`                    | `app/recipes/page.jsx`              | Client Component (list + filters + delete) |
+| `/recipes/form`               | `app/recipes/form/page.jsx`         | Add mode                                   |
+| `/recipes/form?id=…&name=…` | *(same file)*                       | Edit mode (detect via query params)        |
 
 ---
 
 ## What Each Piece Does
 
 ### Server Actions — `app/actions/recipeActions.js`
+
 Three actions. Each calls the repo and refreshes cached pages. Create + Update validate inputs and return errors so the form can display them; Create + Update redirect back to `/recipes` on success.
+
 - `createRecipeAction(prevState, formData)`
 - `updateRecipeAction(prevState, formData)` — needs the recipe id from the form
 - `deleteRecipeAction(id)`
 
 ### Components — `app/components/`
+
 - **`NavBar.jsx`** — top nav with brand link to `/` and links to `/recipes` and `/recipes/form`. Use Next's client-side navigation.
 - **`RecipeCard.jsx`** — one card showing image, name, description, prepTime, cookTime, servings, difficulty badge. Includes an Edit link (carries the recipe to the form so it pre-fills) and a Delete button (asks the parent to delete).
 - **`RecipeForm.jsx`** — shared Add/Edit form. Detects mode from query params, picks the right server action, exposes validation errors and a pending state to the UI, pre-fills inputs in edit mode, and includes a hidden id field when editing.
 
 ### Pages
+
 - **Dashboard (`app/page.js`)** — Server Component. Loads recipes via the repo (no fetch needed) and shows total count + average prep/cook time. Add links to `/recipes` and the add form.
 - **Recipes list (`app/recipes/page.jsx`)** — Client Component. Loads from `/api/recipes`, supports a category dropdown + search input (re-fetch when either changes), renders a `recipes-grid` of `RecipeCard`s, and shows a confirmation dialog before deleting.
 - **Recipe form (`app/recipes/form/page.jsx`)** — renders `<RecipeForm />`. Add mode when no query params; Edit mode when query params include a recipe id.
 
 ### Layout — `app/layout.js`
+
 Render `<NavBar />` above `{children}` so the nav appears on every page. Keep `globals.css` imported.
 
 ---
 
 ## Grading Rubric
 
-| # | Criteria | Points |
-|---|---|---|
-| 1 | **Server Actions** — create (with validation), update (with id), delete | **20** |
-| 2 | **NavBar** — links work, rendered in layout | **5** |
-| 3 | **RecipeCard** — all fields shown, Edit link carries recipe data, Delete button | **15** |
-| 4 | **RecipeForm** — shared add/edit, mode detection, validation errors + pending state shown | **25** |
-| 5 | **Recipes page (`/recipes`)** — created at the correct route, filters work, delete with confirm dialog | **20** |
-| 6 | **Dashboard (`/`)** — Server Component, stats from repo | **10** |
-| 7 | **Layout + Form route (`/recipes/form`)** — layout wires NavBar, form route exists at the correct path | **5** |
-|   | **Total** | **100** |
+| # | Criteria                                                                                                        | Points        |
+| - | --------------------------------------------------------------------------------------------------------------- | ------------- |
+| 1 | **Server Actions** — create (with validation), update (with id), delete                                  | **20**  |
+| 2 | **NavBar** — links work, rendered in layout                                                              | **5**   |
+| 3 | **RecipeCard** — all fields shown, Edit link carries recipe data, Delete button                          | **15**  |
+| 4 | **RecipeForm** — shared add/edit, mode detection, validation errors + pending state shown                | **25**  |
+| 5 | **Recipes page (`/recipes`)** — created at the correct route, filters work, delete with confirm dialog | **20**  |
+| 6 | **Dashboard (`/`)** — Server Component, stats from repo                                                | **10**  |
+| 7 | **Layout + Form route (`/recipes/form`)** — layout wires NavBar, form route exists at the correct path | **5**   |
+|   | **Total**                                                                                                 | **100** |
 
 ---
 
@@ -148,6 +153,6 @@ Assignment 4 - Next.js Frontend with Server Actions/
 ## Deliverables
 
 1. Push your completed `recipevault-app/` to your own repo under `Assignments/Assignment 4 - Next.js Frontend with Server Actions` before **Saturday, May 3, 2026 at 11:59 PM**. **No late submissions.**
-2. Complete and submit the **Testing & Grading Sheet** (`Testing-Grading-Sheet.md`) with all required screenshots in a `screenshots/` folder. ⚠️ Submitting it does **not** add points, but **not submitting it deducts 10 points** from your grade.
+2. Complete and submit the **Testing & Grading Sheet** (`Testing-Grading-Sheet.md`) with all required screenshots in a `screenshots/` folder. ⚠️ N**ot submitting it deducts 10 points** from your grade.
 
 Build everything yourself — no AI tools or code generators.
