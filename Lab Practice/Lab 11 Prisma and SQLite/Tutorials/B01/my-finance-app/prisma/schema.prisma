@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// 1. In schema.prisma: change provider = "prisma-client" to provider = "prisma-client-js"  
+// and remove the output line                                                               
+// 2. In seed.js: import from "@prisma/client" (not from the custom generated path)       
+// 3. Add "prisma": { "seed": "node prisma/seed.js" } to package.json                       
+
+// Then run npx prisma generate followed by npx prisma db seed.          
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id           Int           @id @default(autoincrement())
+  name         String
+  transactions Transaction[]
+  budgets      Budget[]
+  createdAt    DateTime      @default(now())
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  description String
+  amount      Float
+  type        String
+  category    String
+  date        String
+  accountId   Int      @default(1)
+  account     Account  @relation(fields: [accountId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  category  String
+  budgeted  Float
+  spent     Float
+  month     String
+  year      Int
+  accountId Int      @default(1)
+  account   Account  @relation(fields: [accountId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+//  {
+//       "id": 2,
+//       "name": "Savings"
+//   }
+// {
+//       "id": 1,
+//       "category": "Housing",
+//       "budgeted": 5000,
+//       "spent": 4500,
+//       "month": "March",
+//       "year": 2026,
+//       "accountId": 1
+//   },
+
+//  {
+//       "id": 1,
+//       "description": "Monthly Salary",
+//       "amount": 12000,
+//       "type": "income",
+//       "category": "Salary",
+//       "date": "2026-03-01",
+//       "accountId": 1
+//   },
