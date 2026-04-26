@@ -1,11 +1,4 @@
 -- CreateTable
-CREATE TABLE "Account" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- CreateTable
 CREATE TABLE "Transaction" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "description" TEXT NOT NULL,
@@ -19,11 +12,18 @@ CREATE TABLE "Transaction" (
 );
 
 -- CreateTable
+CREATE TABLE "Account" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
 CREATE TABLE "Budget" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "category" TEXT NOT NULL,
     "budgeted" REAL NOT NULL,
-    "spent" REAL NOT NULL,
+    "spent" REAL NOT NULL DEFAULT 0,
     "month" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "accountId" INTEGER NOT NULL DEFAULT 1,
