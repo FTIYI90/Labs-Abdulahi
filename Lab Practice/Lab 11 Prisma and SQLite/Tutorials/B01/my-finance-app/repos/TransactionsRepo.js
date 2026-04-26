@@ -1,12 +1,16 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const dataPath = path.join(process.cwd(), "data", "transactions.json");
 
 class TransactionsRepo {
     async getAll() {
-        const data = await fs.readFile(dataPath, "utf-8");
-        return JSON.parse(data);
+        // const data = await fs.readFile(dataPath, "utf-8");
+        // return JSON.parse(data);
+        return
     }
 
     async save(items) {
