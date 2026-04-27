@@ -201,7 +201,7 @@ npm install @prisma/client@^6
 Then initialize Prisma:
 
 ```bash
-npx prisma init --datasource-provider sqlite
+
 ```
 
 This creates the `prisma/` folder with a starter `schema.prisma`, and would normally add `DATABASE_URL` to `.env` - your `.env` already has it, so Prisma leaves it alone.
@@ -442,11 +442,11 @@ In `repos/TransactionsRepo.js`:
 3. Replace `delete` with the Prisma version.
 4. Replace `getTotalByType` and `getBalance` with the Prisma `aggregate` versions.
 5. Delete the unused `save` method.
-5. Test in the browser:
+6. Test in the browser:
    - Add a transaction → it appears in the list AND in Prisma Studio.
    - Edit it → both views update.
    - Delete it → both views remove it.
-6. **Proof it's all DB now:** open `data/transactions.json` and watch - it doesn't change anymore. (You could even delete the file; the app keeps working.)
+7. **Proof it's all DB now:** open `data/transactions.json` and watch - it doesn't change anymore. (You could even delete the file; the app keeps working.)
 
 ---
 
