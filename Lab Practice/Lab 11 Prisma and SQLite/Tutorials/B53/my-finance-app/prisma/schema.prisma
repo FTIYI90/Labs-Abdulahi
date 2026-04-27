@@ -2,11 +2,35 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model Account {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  description String
+  amount      Float
+  type        String
+  category    String
+  date        DateTime
+  accountId   Int      @default(1)
+}
+
+model Budget {
+  id        Int    @id @default(autoincrement())
+  category  String
+  budgeted  Float
+  spent     Float  @default(0)
+  month     String
+  year      Int
+  accountId Int    @default(1)
 }
