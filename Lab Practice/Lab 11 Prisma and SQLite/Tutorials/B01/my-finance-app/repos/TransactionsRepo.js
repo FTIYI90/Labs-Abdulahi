@@ -31,8 +31,16 @@ class TransactionsRepo {
         return await prisma.transaction.create({ data: newTransaction })
     }
 
-    async update(id, data) {
-        return await prisma.transaction.update({ data: data, where: { id: Number(id) } })
+    async update(id, transaction) {
+        const updatedTransaction = {
+            description: transaction.description,
+            amount: Number(transaction.amount),
+            type: transaction.type,
+            category: transaction.category,
+            date: transaction.date || new Date().toISOString().split("T")[0]
+        };
+
+        return await prisma.transaction.update({ data: updatedTransaction, where: { id: Number(id) } })
     }
 
     async delete(id) {
@@ -67,8 +75,11 @@ class TransactionsRepo {
     }
 
     async getTotalByType(type) {
-        const all = await this.getAll();
-        return all.filter(t => t.type === type).reduce((sum, t) => sum + t.amount, 0);
+        const result = await prisma.transaction.aggregate({
+            where: { type: type },
+            _sum: { amount: true }
+        });
+        return result._sum.amount || 0;
     }
 
     async getBalance() {
