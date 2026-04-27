@@ -201,7 +201,7 @@ npm install @prisma/client@^6
 Then initialize Prisma:
 
 ```bash
-
+npx prisma migrate dev --name init
 ```
 
 This creates the `prisma/` folder with a starter `schema.prisma`, and would normally add `DATABASE_URL` to `.env` - your `.env` already has it, so Prisma leaves it alone.
