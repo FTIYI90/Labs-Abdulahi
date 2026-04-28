@@ -11,26 +11,30 @@ datasource db {
 }
 
 model Account {
-  id   Int    @id @default(autoincrement())
-  name String
+  id           Int           @id @default(autoincrement())
+  name         String
+  transactions Transaction[]
+  budgets      Budget[]
 }
 
 model Transaction {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   description String
   amount      Float
   type        String
   category    String
-  date        DateTime
-  accountId   Int      @default(1)
+  date        String
+  accountId   Int     @default(1)
+  account     Account @relation(fields: [accountId], references: [id])
 }
 
 model Budget {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   category  String
   budgeted  Float
-  spent     Float  @default(0)
+  spent     Float   @default(0)
   month     String
   year      Int
-  accountId Int    @default(1)
+  accountId Int     @default(1)
+  account   Account @relation(fields: [accountId], references: [id])
 }
