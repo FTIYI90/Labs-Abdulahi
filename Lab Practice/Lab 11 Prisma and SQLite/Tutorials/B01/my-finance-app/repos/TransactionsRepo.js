@@ -1,12 +1,14 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const dataPath = path.join(process.cwd(), "data", "transactions.json");
 
 class TransactionsRepo {
     async getAll() {
-        const data = await fs.readFile(dataPath, "utf-8");
-        return JSON.parse(data);
+        return await prisma.transaction.findMany({ orderBy: { category: "desc" } });
     }
 
     async save(items) {
@@ -14,55 +16,70 @@ class TransactionsRepo {
     }
 
     async getById(id) {
-        const all = await this.getAll();
-        return all.find(t => t.id === Number(id));
+        return await prisma.transaction.findUnique({ where: { id: Number(id) } });
     }
 
-    async create(data) {
-        const all = await this.getAll();
-        const newItem = {
-            id: Math.max(...all.map(t => t.id), 0) + 1,
-            description: data.description,
-            amount: Number(data.amount),
-            type: data.type,
-            category: data.category,
-            date: data.date || new Date().toISOString().split("T")[0]
+    async create(transaction) {
+        const newTransaction = {
+            description: transaction.description,
+            amount: Number(transaction.amount),
+            type: transaction.type,
+            category: transaction.category,
+            date: transaction.date || new Date().toISOString().split("T")[0]
         };
-        all.push(newItem);
-        await this.save(all);
-        return newItem;
+
+        return await prisma.transaction.create({ data: newTransaction })
     }
 
-    async update(id, data) {
-        const all = await this.getAll();
-        const index = all.findIndex(t => t.id === Number(id));
-        if (index === -1) return null;
-        all[index] = { ...all[index], ...data, id: Number(id) };
-        await this.save(all);
-        return all[index];
+    async update(id, transaction) {
+        const updatedTransaction = {
+            description: transaction.description,
+            amount: Number(transaction.amount),
+            type: transaction.type,
+            category: transaction.category,
+            date: transaction.date || new Date().toISOString().split("T")[0]
+        };
+
+        return await prisma.transaction.update({ data: updatedTransaction, where: { id: Number(id) } })
     }
 
     async delete(id) {
-        const all = await this.getAll();
-        const index = all.findIndex(t => t.id === Number(id));
-        if (index === -1) return false;
-        all.splice(index, 1);
-        await this.save(all);
-        return true;
+        return await prisma.transaction.delete({ where: { id: Number(id) } })
     }
 
     async search(query) {
-        const all = await this.getAll();
-        const q = query.toLowerCase();
-        return all.filter(t =>
-            t.description.toLowerCase().includes(q) ||
-            t.category.toLowerCase().includes(q)
-        );
+        return await prisma.transaction.findMany(
+            {
+                orderBy: { category: "desc" },
+                where: {
+                    OR: [
+                        { description: { contains: query } },
+                        { category: { contains: query } }
+                    ]
+
+                }
+
+            });
+
+
+        // return await prisma.transaction.findMany(
+        //     {
+        //         orderBy: { category: "desc" },
+        //         where: {
+        //             OR: [
+        //                 { description: { contains: query, mode: "insensitive" } },
+        //                 { category: { contains: query, mode: "insensitive" } }
+        //             ]
+        //         }
+        //     });
     }
 
     async getTotalByType(type) {
-        const all = await this.getAll();
-        return all.filter(t => t.type === type).reduce((sum, t) => sum + t.amount, 0);
+        const result = await prisma.transaction.aggregate({
+            where: { type: type },
+            _sum: { amount: true }
+        });
+        return result._sum.amount || 0;
     }
 
     async getBalance() {
